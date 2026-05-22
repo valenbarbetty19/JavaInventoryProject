@@ -3,6 +3,7 @@ package org.project.javainventoryproject.service;
 
 
 import org.project.javainventoryproject.entity.Product;
+import org.project.javainventoryproject.exception.ResourceNotFoundException;
 import org.project.javainventoryproject.exception.SkuAlreadyExistsException;
 import org.project.javainventoryproject.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,10 @@ public class ProductService {
     }
     public Page<Product> findAll(Pageable pageable) {
         return repository.findAll(pageable);
+    }
+    public Product findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with ID " + id + " not found."));
     }
 
 
